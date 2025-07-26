@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Clone repository'){
             steps{
-                git url: 'https://github.com/CharlesClove/devops-python-test.git', branch: 'main'
+                git url: 'https://github.com/CharlesClove/devops-python-test.git', branch: 'dev'
             }
     }
         
