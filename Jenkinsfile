@@ -22,8 +22,10 @@ pipeline {
 
             steps{
                 echo 'testing the app..'
-                app.inside{
-                    sh 'echo "test passed"'
+                script{
+                    app.inside{
+                        sh 'echo "test passed"'
+                    }
                 }
             }
         }
@@ -31,8 +33,10 @@ pipeline {
     
             steps{
                 echo 'deploying the app..'
-                docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-creds'){
-                    app.push()
+                script{
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-creds'){
+                        app.push()
+                    }
                 }
                 echo "Docker image pushed (if configured to do so)."
             }
