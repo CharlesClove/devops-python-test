@@ -2,10 +2,7 @@ pipeline {
     agent any
 
     stages {
-        stage('Clone repository'){
-            steps{
-                git url: 'https://github.com/CharlesClove/devops-python-test.git', branch: 'dev'
-            }
+
     }
         
         stage("build"){
