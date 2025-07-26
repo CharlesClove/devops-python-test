@@ -4,9 +4,9 @@ pipeline {
     stages {
         stage('Clone repository'){
             steps{
-                checkout scm
+                git url: 'https://github.com/CharlesClove/devops-python-test.git', branch: 'main'
             }
-        }
+    }
         
         stage("build"){
             steps{
