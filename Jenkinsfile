@@ -1,52 +1,55 @@
+
+def app
+
 pipeline {
     agent any
 
     stages {
 
-    }
-        
+
         stage("build"){
             steps{
                 echo 'building the app..'
                 script{
                     def imgName = "my-app-by-jenkins:${env.BUILD_NUMBER}"
+                    echo "Building Docker image: ${imgName}"
                     app = docker.build(imgName, '.')
                 }
-                echo "Docker image '${imgName}' built successfully!"
             }
         }
+        
         stage("test"){
-
             steps{
                 echo 'testing the app..'
                 script{
                     app.inside{
+                        sh 'echo "Running tests inside the container..."'
                         sh 'echo "test passed"'
                     }
                 }
             }
         }
+        
         stage("deploy"){
-    
+
             steps{
                 echo 'deploying the app..'
                 script{
+
                     docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-creds'){
                         app.push()
                     }
                 }
-                echo "Docker image pushed (if configured to do so)."
+                echo "Docker image pushed successfully."
             }
         }
-                stage("Run Docker Container (Optional)") {
+        
+        stage("Run Docker Container (Optional)") {
             steps {
                 script {
-                    // Example of running the built image temporarily
-                    // This is more common in 'deploy' stages.
-                    // Ensure the container is given a unique name if run multiple times.
                     sh "docker run --rm --name my-app-container-${env.BUILD_NUMBER} ${app.id}"
-                    echo "Docker container could be run here if desired."
                 }
             }
         }
     }
+}
