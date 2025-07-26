@@ -11,7 +11,7 @@ pipeline {
             steps{
                 echo 'building the app..'
                 script{
-                    def imgName = "my-app-by-jenkins238947239479237492374932749234789239847239472398:${env.BUILD_NUMBER}"
+                    def imgName = "clovedockerhub/my-app-by-jenkinsssssss:${env.BUILD_NUMBER}"
                     echo "Building Docker image: ${imgName}"
                     app = docker.build(imgName, '.')
                 }
