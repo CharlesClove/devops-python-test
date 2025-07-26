@@ -13,7 +13,7 @@ pipeline {
                 echo 'building the app..'
                 script{
                     def imgName = "my-app-by-jenkins:${env.BUILD_NUMBER}"
-                    app = docker.build(imgName, '.')
+                    app = docker.build(imageName, '.')
                 }
                 echo "Docker image '${imageName}' built successfully!"
             }
