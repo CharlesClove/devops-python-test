@@ -11,8 +11,10 @@ pipeline {
         stage("build"){
             steps{
                 echo 'building the app..'
-                def imgName = "my-app-by-jenkins:${env.BUILD_NUMBER}"
-                app = docker.build(imgName, '.')
+                script{
+                    def imgName = "my-app-by-jenkins:${env.BUILD_NUMBER}"
+                    app = docker.build(imgName, '.')
+                }
                 echo "Docker image '${imageName}' built successfully!"
             }
         }
