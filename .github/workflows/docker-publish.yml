@@ -23,6 +23,7 @@ jobs:
         with:
           images: ${{ secrets.DOCKERHUB_USERNAME }}/devops-python-test  # Changed 'image' to 'images'
           tags: |
+            type=raw,value=build-${git.run_number}
             type=sha
 
       - name: Login to dockerhub
