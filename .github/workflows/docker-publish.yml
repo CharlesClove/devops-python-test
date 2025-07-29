@@ -17,10 +17,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set Sha for image #HERE I SET A SHORT SHA USING GLOBAL GIT SHA(GITHUB_SHA), PRASING IT TO GET FIRST 7 CHARS (::7) AND SAVING IT TO GIT ENVS (>> $GITHUB_ENV)
-        run: echo "s_sha=${GITHUB_SHA::7}" >> $GITHUB_ENV
+      - name: Set outputs
+        id: vars
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
       - name: Check outputs
-        run: echo ${{ steps.vars.outputs.s_sha }}
+        run: echo ${{ steps.vars.outputs.sha_short }}
        
       - name: metadata creator
         id: meta
