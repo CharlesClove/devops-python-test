@@ -9,7 +9,7 @@ env:
   REGISTRY: docker.io
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
-
+  SHORT_SHA: ${{github.sha::7}}
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,18 +17,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set outputs
-        id: vars
-        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-      - name: Check outputs
-        run: echo ${{ steps.vars.outputs.sha_short }}
+      - name: Checkout SHA
+        run: echo $SHORT_SHA
        
       - name: metadata creator
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{secrets.DOCKERHUB_USERNAME}}/devops-python-test:${{ steps.vars.outputs.s_sha }}
-
+          images: ${{secrets.DOCKERHUB_USERNAME}}/devops-python-test:${{SHORT_SHA}}
+          
       - name: Login to dockerhub
         uses: docker/login-action@v2
         with:
